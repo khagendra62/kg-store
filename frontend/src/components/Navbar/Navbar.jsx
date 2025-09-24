@@ -1,16 +1,20 @@
-import { Menu, ShoppingCart, User, X } from "lucide-react";
+import { Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import React, { useState } from "react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const [active, setActive] = useState("");
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const navlinks = ["Home", "About us", "Products", "Contact us"];
+
   return (
     <>
-      <nav className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 sticky top-0 z-100">
+      <nav className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 sticky top-0 z-100 py-2 md:py-0">
         <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-10 text-white">
           <div className="flex justify-between items-center h-15 md:h-18 lg:h-20 ">
             <div className="flex-shrink-0">
@@ -21,11 +25,14 @@ const Navbar = () => {
 
             <div className="hidden lg:block">
               <ul className="flex gap-x-8">
-                {["Home", "About us", "Products", "Contact us"].map((item) => (
+                {navlinks.map((item) => (
                   <li key={item}>
                     <a
                       href="#"
-                      className="text-gray-300 hover:text-cyan-400 px-4 py-2 rounded-lg text-lg font-medium transition-all duration-300 hover:bg-white/10 hover:scale-155 relative group"
+                      onClick={() => setActive(item)}
+                      className={`hover:text-cyan-400 px-4 py-2 rounded-lg text-lg font-medium transition-all duration-300 hover:bg-white/10 hover:scale-155 relative group active:text-cyan-400 *:
+                        ${active === item ? "text-cyan-400" : "text-gray-300"}
+                        `}
                     >
                       {item}
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
@@ -69,6 +76,65 @@ const Navbar = () => {
               </button>
             </div>
           </div>
+
+          {isMenuOpen && (
+            <div className="lg:hidden bg-black/40   rounded-lg mt-2 mb-4 border border-gray-700">
+              <div className="px-6 py-4 gap-y-4">
+                {navlinks.map((item) => (
+                  <ul key={item}>
+                    <a
+                      onClick={() => {
+                        setActive(item);
+                        setIsMenuOpen(false);
+                      }}
+                      href="#"
+                      className={` block hover:text-cyan-400 py-2 text-lg font-medium transition-colors duration-300 active:text-cyan-400 ${
+                        active === item ? "text-cyan-400" : "text-gray-300"
+                      }
+                        `}
+                    >
+                      {item}
+                    </a>
+                  </ul>
+                ))}
+
+                <hr className="border-gray-700 my-4" />
+
+                <div className="gap-y-3 flex flex-col">
+                  <button
+                    className="w-full flex items-center justify-center space-x-2 text-gray-300 hover:text-cyan-400 py-3 rounded-lg border border-gray-600 hover:border-cyan-400 transition-all duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <Search size={18} />
+                    <span>Search</span>
+                  </button>
+
+                  <button
+                    className="w-full flex items-center justify-center gap-x-2 text-gray-300  hover:text-cyan-400 py-3 rounded-lg border border-gray-600 hover:border-cyan-400 transition-all duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <ShoppingCart size={18} />
+                    <span>Cart (7)</span>
+                  </button>
+
+                  <button
+                    className="w-full flex items-center justify-center gap-x-2 text-gray-300 hover:text-white py-3 rounded-lg border border-gray-600 hover:border-cyan-400 transition-all duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User size={18} />
+                    <span>Login</span>
+                  </button>
+
+                  <button
+                    className="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg font-medium hover:from-cyan-400 hover:to-purple-400 transition-all duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Sign up
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
     </>
