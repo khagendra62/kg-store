@@ -9,7 +9,7 @@ router.post("/", postProduct);
 
 // console.log(process.env.MONGO_URI)
 
-router.put("/:id", putProduct)
+router.put("/:id", putProduct) 
 
 router.delete("/:id", deleteProduct)
 
