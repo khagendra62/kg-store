@@ -1,7 +1,13 @@
-import { ShoppingCart, User } from "lucide-react";
-import React from "react";
+import { Menu, ShoppingCart, User, X } from "lucide-react";
+import React, { useState } from "react";
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <>
       <nav className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 sticky top-0 z-100">
@@ -29,7 +35,7 @@ const Navbar = () => {
               </ul>
             </div>
 
-            <div className="flex gap-10 items-center">
+            <div className="lg:flex gap-10 items-center hidden">
               <div>
                 <button className=" text-gray-300 hover:text-cyan-400 p-2 rounded-lg hover:bg-white/10 transition-all duration-300 hover:scale-110 relative">
                   <ShoppingCart size={22} />
@@ -52,6 +58,15 @@ const Navbar = () => {
                   Sign up
                 </button>
               </div>
+            </div>
+
+            <div className="lg:hidden">
+              <button
+                onClick={toggleMenu}
+                className="text-gray-300 hover:text-cyan-400 p-2 rounded-lg hover:bg-white/10 transition-all duration-300"
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
             </div>
           </div>
         </div>
